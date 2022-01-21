@@ -8,7 +8,7 @@ import static junit.framework.TestCase.*;
 import static org.junit.Assert.*;
 
 
-public class LoginTest {
+public class TestLogin {
     Login login;
 
     @Before
