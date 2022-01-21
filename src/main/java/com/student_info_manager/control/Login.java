@@ -17,7 +17,6 @@ public class Login {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(1);
         }
-        System.out.println("Opened database successfully");
     }
 
     /**
