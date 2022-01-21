@@ -3,8 +3,23 @@ package com.student_info_manager.models;
 import java.sql.*;
 
 public class Admin extends BasePerson{
+    private Connection users_db;
+    private Connection courses_db;
+    Statement stmt;
+
     public Admin(String firstName, String middleName, String lastName, String department) {
         super(firstName, middleName, lastName, department);
+        try {
+            Class.forName("org.sqlite.JDBC");
+            users_db = DriverManager.getConnection("jdbc:sqlite:src/main/java/com/student_info_manager/databases" +
+                    "/users.db");
+            courses_db = DriverManager.getConnection("jdbc:sqlite:src/main/java/com/student_info_manager/databases" +
+                    "/courses.db");
+
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(1);
+        }
     }
 
     /**
@@ -18,11 +33,7 @@ public class Admin extends BasePerson{
     public boolean addTeacher(Teacher teacher, String username, String password) {
         try {
             // Establish connection to users.db database
-            Class.forName("org.sqlite.JDBC");
-            Connection c = DriverManager.getConnection("jdbc:sqlite:src/main/java/com/student_info_manager/databases" +
-                    "/users.db");
-
-            Statement stmt = c.createStatement();
+            stmt = users_db.createStatement();
             String password_hash = org.apache.commons.codec.digest.DigestUtils.sha256Hex(password);
 
             // Check if there's a teacher with the same username
@@ -51,11 +62,7 @@ public class Admin extends BasePerson{
      */
     public boolean removeTeacher(String username) {
         try {
-            Class.forName("org.sqlite.JDBC");
-            Connection c = DriverManager.getConnection("jdbc:sqlite:src/main/java/com/student_info_manager/databases" +
-                    "/users.db");
-
-            Statement stmt = c.createStatement();
+            stmt = users_db.createStatement();
 
             // Check if there's a teacher with the same username
             ResultSet identical_username =
@@ -75,29 +82,24 @@ public class Admin extends BasePerson{
     /**
      * Adds a Student to the database users.db
      * @param student new Student to be added.
-     * @param ID DI of the new Teacher
      * @param password password of the new Student
      * @return true if the student is added successfully
      *         false if there's a student with the same ID already in the database
      */
-    public boolean addStudent(Student student, String ID, String password) {
+    public boolean addStudent(Student student, String password) {
         try {
             // Establish connection to users.db database
-            Class.forName("org.sqlite.JDBC");
-            Connection c = DriverManager.getConnection("jdbc:sqlite:src/main/java/com/student_info_manager/databases" +
-                    "/users.db");
-
-            Statement stmt = c.createStatement();
+            stmt = users_db.createStatement();
             String password_hash = org.apache.commons.codec.digest.DigestUtils.sha256Hex(password);
 
             // Check if there's a teacher with the same username
             ResultSet identical_usernames =
-                    stmt.executeQuery("SELECT * FROM students WHERE ID = '" + ID + "'");
+                    stmt.executeQuery("SELECT * FROM students WHERE ID = '" + student.getID() + "'");
             if (!identical_usernames.isClosed())
                 return false;
 
             stmt.executeUpdate("INSERT INTO students (ID, first_name, middle_name, last_name, section, batch, " +
-                    "department, password) VALUES ('" + ID + "', '" + student.getName()[0] + "', '" + student.getName()[1] + "', '" + student.getName()[2] + "', '" +
+                    "department, password) VALUES ('" + student.getID() + "', '" + student.getName()[0] + "', '" + student.getName()[1] + "', '" + student.getName()[2] + "', '" +
                     student.getSection() + "', '" + student.getBatch() + "', '" + student.getDepartment() + "', '" + password_hash + "')");
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
@@ -114,11 +116,7 @@ public class Admin extends BasePerson{
      */
     public boolean removeStudent(String ID) {
         try {
-            Class.forName("org.sqlite.JDBC");
-            Connection c = DriverManager.getConnection("jdbc:sqlite:src/main/java/com/student_info_manager/databases" +
-                    "/users.db");
-
-            Statement stmt = c.createStatement();
+            stmt = users_db.createStatement();
 
             // Check if there's a teacher with the same username
             ResultSet identical_username =
@@ -135,14 +133,72 @@ public class Admin extends BasePerson{
         return true;
     }
 
-    public boolean addCourse(Course course) {
-        // TODO: add a new course to the database
-        return false;
+    /**
+     * Finds a Course in courses.db
+     * @param title Title of the Course, case-sensitive
+     * @return a Course if a matching title is found, null otherwise
+     */
+    public Course getCourse(String title) {
+        try {
+            ResultSet found_course =
+                    stmt.executeQuery("SELECT * FROM courses WHERE title = '" + title + "'");
+
+            // If a matching course title is found, make a Course object from the row  the title was found and return it
+            if (!found_course.isClosed()) {
+                return new Course(found_course.getString("title"), found_course.getInt("credit_hr"),
+                        found_course.getInt("semester_given"), found_course.getString("prerequisite"),
+                        found_course.getString("department"));
+            }
+
+        } catch ( Exception e ) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(1);
+        }
+        return null;
     }
 
-    public boolean removeCourse(Course course) {
-        // TODO: removes course from the database
-        return false;
+    public boolean addCourse(Course course) {
+        try {
+            stmt = courses_db.createStatement();
+
+            // Check if there's a course with the same title
+            ResultSet identical_titles =
+                    stmt.executeQuery("SELECT * FROM courses WHERE title = '" + course.getTitle() + "'");
+            if (!identical_titles.isClosed())
+                return false;
+
+            stmt.executeUpdate("INSERT INTO courses (title, credit_hr, semester_given, prerequisite, department) VALUES ('" +
+                    course.getTitle() + "', '" +
+                    course.getCredit_hour() + "', '" +
+                    course.getSemester_given() + "', '" +
+                    course.getPrerequisite() + "', '" +
+                    course.getDepartment() + "')");
+
+        } catch ( Exception e ) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(1);
+        }
+
+        return true;
+    }
+
+    public boolean removeCourse(String title) {
+        try {
+            stmt = courses_db.createStatement();
+
+            // Check if there's a teacher with the same username
+            ResultSet found_course =
+                    stmt.executeQuery("SELECT * FROM courses WHERE title = '" + title + "'");
+            if (found_course.isClosed())
+                return false;
+
+            stmt.executeUpdate("DELETE FROM courses WHERE title  = '" + title + "'");
+
+        } catch ( Exception e ) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(1);
+        }
+        return true;
     }
 
     public void updateResult(Student student, Result result) {

@@ -44,7 +44,7 @@ public class TestAdminControls {
     public void testAddNewStudent() {
         Student newStudentToAdd = new Student("Melaku", "Kebede", "Gemechis", "A", 2019, "Food Science",
                 "ETS0856/11");
-        admin.addStudent(newStudentToAdd, newStudentToAdd.getID(), "garamond_serif78");
+        admin.addStudent(newStudentToAdd, "garamond_serif78");
 
         // To re-establish connection with the database. Removing this line will throw a database
         // not found SQL exception
@@ -59,5 +59,20 @@ public class TestAdminControls {
 
         // Delete teacher to ensure when the test is rerun, melaku_k is not in the database
         admin.removeStudent(newStudentToAdd.getID());
+    }
+
+    @Test
+    public void testAddCourse() {
+        Course courseToAdd = new Course("Soil Mechanics", 3, 5,
+                "Mechanics I: Statics", "Civil Engineering");
+        admin.addCourse(courseToAdd);
+
+        Course courseFromDatabase = admin.getCourse("Soil Mechanics");
+        assertEquals(courseToAdd.getTitle(), courseFromDatabase.getTitle());
+        assertEquals(courseToAdd.getCredit_hour(), courseFromDatabase.getCredit_hour());
+        assertEquals(courseToAdd.getSemester_given(), courseFromDatabase.getSemester_given());
+        assertEquals(courseToAdd.getPrerequisite(), courseFromDatabase.getPrerequisite());
+
+        admin.removeCourse(courseToAdd.getTitle());
     }
 }
