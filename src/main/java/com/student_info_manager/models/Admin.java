@@ -1,16 +1,8 @@
 package com.student_info_manager.models;
 
-public class Admin {
-    private final String firstName;
-    private final String middleName;
-    private final String lastName;
-    private final String department;
-
+public class Admin extends BasePerson{
     public Admin(String firstName, String middleName, String lastName, String department) {
-        this.firstName = firstName;
-        this.middleName = middleName;
-        this.lastName = lastName;
-        this.department = department;
+        super(firstName, middleName, lastName, department);
     }
 
     public boolean addTeacher(Teacher teacher) {
@@ -47,11 +39,4 @@ public class Admin {
         // TODO: when database usage is implemented, make this method update the result of @student
     }
 
-    public String[] getName() {
-        return new String[]{firstName, middleName, lastName};
-    }
-
-    public String getDepartment() {
-        return department;
-    }
 }
