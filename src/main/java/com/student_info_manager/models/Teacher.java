@@ -3,11 +3,14 @@ package com.student_info_manager.models;
 public class Teacher extends BasePerson{
     private final String courseTeaching;
     private final String sectionsTeaching;
+    private final int batchTeaching;
 
-    public Teacher(String firstName, String middleName, String lastName, String courseTeaching, String sectionsTeaching, String department) {
+    public Teacher(String firstName, String middleName, String lastName, String courseTeaching,
+                   String sectionsTeaching, int batchTeaching, String department) {
         super(firstName, middleName, lastName, department);
         this.courseTeaching = courseTeaching;
         this.sectionsTeaching = sectionsTeaching;
+        this.batchTeaching = batchTeaching;
 
     }
 
@@ -38,5 +41,9 @@ public class Teacher extends BasePerson{
 
     public String getSectionsTeaching() {
         return sectionsTeaching;
+    }
+
+    public int getBatchTeaching() {
+        return batchTeaching;
     }
 }

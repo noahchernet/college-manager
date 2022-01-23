@@ -88,7 +88,8 @@ public class Login {
                     result = stmt.executeQuery("SELECT * FROM teachers WHERE username = '" + username + "'");
                     retrievedTeacher = new Teacher(result.getString("first_name"), result.getString("middle_name"),
                             result.getString("last_name"), result.getString("course_teaching"),
-                            result.getString("sections_teaching"), result.getString("department"));
+                            result.getString("sections_teaching"), result.getInt("batch_teaching"),
+                            result.getString("department"));
                     break;
                 }
             }

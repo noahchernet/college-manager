@@ -43,10 +43,12 @@ public class Admin extends BasePerson{
                 return false;
 
             stmt.executeUpdate(String.format("INSERT INTO teachers (username, first_name, middle_name, last_name, " +
-                    "course_teaching, sections_teaching, department, password) " +
-                            "VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');",
+                    "course_teaching, sections_teaching, batch_teaching,department, password) " +
+                            "VALUES ('%s', '%s', '%s', '%s', '%s', '%s', %d, '%s', '%s');",
                     username, teacher.getName()[0], teacher.getName()[1], teacher.getName()[2],
-                    teacher.getCourseTeaching(), teacher.getSectionsTeaching(), teacher.getDepartment(), password_hash));
+                    teacher.getCourseTeaching(), teacher.getSectionsTeaching(), teacher.getBatchTeaching(),
+                    teacher.getDepartment(),
+                    password_hash));
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(1);

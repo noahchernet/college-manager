@@ -23,7 +23,7 @@ public class TestAdminControls {
     @Test
     public void testAddNewTeacher() {
         Teacher newTeacherToAdd = new Teacher("Melaku", "Kebede", "Gemechis", "Mechanics I: Statics", "C,D,E",
-                "Mechanical Engineering");
+                2018,"Mechanical Engineering");
         admin.addTeacher(newTeacherToAdd, "melaku_k", "garamond_serif78");
 
         // To re-establish connection with the database. Removing this line will throw a database
@@ -34,6 +34,7 @@ public class TestAdminControls {
         assertArrayEquals(newTeacherToAdd.getName(), newTeacherFromDatabase.getName());
         assertEquals(newTeacherToAdd.getSectionsTeaching(), newTeacherFromDatabase.getSectionsTeaching());
         assertEquals(newTeacherToAdd.getCourseTeaching(), newTeacherFromDatabase.getCourseTeaching());
+        assertEquals(newTeacherToAdd.getBatchTeaching(), newTeacherFromDatabase.getBatchTeaching());
         assertEquals(newTeacherToAdd.getDepartment(), newTeacherFromDatabase.getDepartment());
 
         // Delete teacher to ensure when the test is rerun, melaku_k is not in the database
