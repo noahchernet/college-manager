@@ -11,7 +11,7 @@ public class Result {
     private final Department department;
 
     private Double quiz = null;
-    private Double attendance = 0.0;
+    private Double attendance = null;
     private Double test_1 = null;
     private Double test_2 = null;
     private Double assignment_1 = null;

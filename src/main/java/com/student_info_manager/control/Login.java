@@ -8,8 +8,10 @@ import java.sql.*;
 public class Login {
     Connection c;
 
+    /**
+     * Initialize the connection to the database that will later on be used to log in an Admin, Teacher or Student
+     */
     public Login() {
-
         try {
             Class.forName("org.sqlite.JDBC");
             c = DriverManager.getConnection("jdbc:sqlite:src/main/java/com/student_info_manager/databases/users.db");

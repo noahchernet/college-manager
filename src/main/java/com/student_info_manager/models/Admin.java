@@ -103,6 +103,37 @@ public class Admin extends BasePerson{
             stmt.executeUpdate("INSERT INTO students (ID, first_name, middle_name, last_name, section, batch, " +
                     "department, password) VALUES ('" + student.getID() + "', '" + student.getName()[0] + "', '" + student.getName()[1] + "', '" + student.getName()[2] + "', '" +
                     student.getSection() + "', '" + student.getBatch() + "', '" + student.getDepartment() + "', '" + password_hash + "')");
+
+            // Establish connection to results.db and courses.db to create a list of results for the new Student
+            Connection results_db = DriverManager.getConnection(
+                    "jdbc:sqlite:src/main/java/com/student_info_manager/databases/results.db");
+            Connection courses_db = DriverManager.getConnection(
+                    "jdbc:sqlite:src/main/java/com/student_info_manager/databases/courses.db");
+            Statement resultsStmt = results_db.createStatement();
+            Statement coursesStmt = courses_db.createStatement();
+
+            resultsStmt.executeUpdate("CREATE TABLE " + student.getID().replace('/', '_') + "(" +
+                    "course TEXT PRIMARY KEY NOT NULL, " +
+                    "quiz FLOAT," +
+                    "attendance FLOAT," +
+                    "test_1 FLOAT," +
+                    "test_2 FLOAT," +
+                    "assignment_1 FLOAT," +
+                    "assignment_2 FLOAT," +
+                    "final_exam FLOAT" +
+                    ")");
+
+            ResultSet coursesStudentTakes = coursesStmt.executeQuery(
+                    "SELECT * FROM courses WHERE department='" + student.getDepartment() + "'");
+
+            while (coursesStudentTakes.next()) {
+                resultsStmt.executeUpdate(
+                        "INSERT INTO " + student.getID().replace('/', '_') +
+                                " (course, quiz, attendance, test_1, test_2, assignment_1, assignment_2, final_exam) " +
+                                "VALUES ('" + coursesStudentTakes.getString("title") +
+                                "', null, null, null, null, null, null, null);");
+            }
+
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(1);
