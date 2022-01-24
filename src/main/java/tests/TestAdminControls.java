@@ -43,8 +43,8 @@ public class TestAdminControls {
 
     @Test
     public void testAddNewStudent() {
-        Student newStudentToAdd = new Student("Melaku", "Kebede", "Gemechis", "A", 2019, "Food Science",
-                "ETS0856/11");
+        Student newStudentToAdd = new Student("Melaku", "Kebede", "Gemechis", "A", 2019, "Electrical Engineering",
+                "ETS0856/19");
         admin.addStudent(newStudentToAdd, "garamond_serif78");
 
         // To re-establish connection with the database. Removing this line will throw a database

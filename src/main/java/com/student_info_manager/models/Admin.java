@@ -49,8 +49,8 @@ public class Admin extends BasePerson{
                     teacher.getCourseTeaching(), teacher.getSectionsTeaching(), teacher.getBatchTeaching(),
                     teacher.getDepartment(),
                     password_hash));
-        } catch ( Exception e ) {
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+        } catch (SQLException sqlException) {
+            System.err.println("SQL Exception: " + sqlException.getMessage());
             System.exit(1);
         }
         return true;
@@ -74,8 +74,8 @@ public class Admin extends BasePerson{
 
             stmt.executeUpdate("DELETE FROM teachers WHERE username = '" + username + "'");
 
-        } catch ( Exception e ) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        } catch (SQLException sqlException) {
+            System.err.println("SQL Exception: " + sqlException.getMessage());
             System.exit(1);
         }
         return true;
@@ -134,8 +134,8 @@ public class Admin extends BasePerson{
                                 "', null, null, null, null, null, null, null);");
             }
 
-        } catch ( Exception e ) {
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+        } catch (SQLException sqlException) {
+            System.err.println("SQL Exception: " + sqlException.getMessage());
             System.exit(1);
         }
         return true;
@@ -159,8 +159,8 @@ public class Admin extends BasePerson{
 
             stmt.executeUpdate("DELETE FROM students WHERE ID = '" + ID + "'");
 
-        } catch ( Exception e ) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        } catch (SQLException sqlException) {
+            System.err.println("SQL Exception: " + sqlException.getMessage());
             System.exit(1);
         }
         return true;
@@ -183,8 +183,8 @@ public class Admin extends BasePerson{
                         found_course.getString("department"));
             }
 
-        } catch ( Exception e ) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        } catch (SQLException sqlException) {
+            System.err.println("SQL Exception: " + sqlException.getMessage());
             System.exit(1);
         }
         return null;
@@ -207,8 +207,8 @@ public class Admin extends BasePerson{
                     course.getPrerequisite() + "', '" +
                     course.getDepartment() + "')");
 
-        } catch ( Exception e ) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        } catch (SQLException sqlException) {
+            System.err.println("SQL Exception: " + sqlException.getMessage());
             System.exit(1);
         }
 
@@ -227,8 +227,8 @@ public class Admin extends BasePerson{
 
             stmt.executeUpdate("DELETE FROM courses WHERE title  = '" + title + "'");
 
-        } catch ( Exception e ) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        } catch (SQLException sqlException) {
+            System.err.println("SQL Exception: " + sqlException.getMessage());
             System.exit(1);
         }
         return true;
