@@ -1,5 +1,7 @@
 package com.student_info_manager.models;
 
+import java.sql.*;
+
 public class Teacher extends BasePerson{
     private final String courseTeaching;
     private final String sectionsTeaching;
@@ -11,11 +13,6 @@ public class Teacher extends BasePerson{
         this.courseTeaching = courseTeaching;
         this.sectionsTeaching = sectionsTeaching;
         this.batchTeaching = batchTeaching;
-
-    }
-
-    static public void getResultOfStudent(Student student, Course course){
-        // TODO: Pull result of a course of a student from database
     }
 
     public void updateResult(Student student, Result result) {
