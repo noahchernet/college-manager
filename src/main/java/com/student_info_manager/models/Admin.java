@@ -3,8 +3,7 @@ package com.student_info_manager.models;
 import java.sql.*;
 
 public class Admin extends BasePerson{
-    private Connection users_db;
-    private Connection courses_db;
+    private Connection users_db, results_db, courses_db;
     Statement stmt;
 
     public Admin(String firstName, String middleName, String lastName, String department) {
@@ -15,6 +14,8 @@ public class Admin extends BasePerson{
                     "/users.db");
             courses_db = DriverManager.getConnection("jdbc:sqlite:src/main/java/com/student_info_manager/databases" +
                     "/courses.db");
+            results_db = DriverManager.getConnection(
+                    "jdbc:sqlite:src/main/java/com/student_info_manager/databases/results.db");
 
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
@@ -112,6 +113,7 @@ public class Admin extends BasePerson{
             Statement resultsStmt = results_db.createStatement();
             Statement coursesStmt = courses_db.createStatement();
 
+            // Create a table in based on the student's ID in the results.db database to hold their scores
             resultsStmt.executeUpdate("CREATE TABLE " + student.getID().replace('/', '_') + "(" +
                     "course TEXT PRIMARY KEY NOT NULL, " +
                     "quiz FLOAT," +
@@ -122,6 +124,7 @@ public class Admin extends BasePerson{
                     "assignment_2 FLOAT," +
                     "final_exam FLOAT" +
                     ")");
+
 
             ResultSet coursesStudentTakes = coursesStmt.executeQuery(
                     "SELECT * FROM courses WHERE department='" + student.getDepartment() + "'");
@@ -234,8 +237,33 @@ public class Admin extends BasePerson{
         return true;
     }
 
-    public void updateResult(Student student, Result result) {
-        // TODO: when database usage is implemented, make this method update the result of @student
+    public boolean updateResult(Student student, Result newResult) {
+        if (!newResult.getStudent().equals(student)) {
+            return false;
+        }
+        String studentTableName = student.getID().replace('/', '_');
+        try {
+            Statement resultsStmt = results_db.createStatement();
+            ResultSet resultSet = resultsStmt.executeQuery("SELECT * FROM " +
+                     studentTableName + " WHERE course='" + newResult.getCourse().getTitle() + "'");
+
+            if (resultSet.isClosed()) return false;
+
+            resultsStmt.executeUpdate("UPDATE " + studentTableName + " SET (quiz, attendance, test_1, test_2, " +
+                    "assignment_1, assignment_2, final_exam) = (" +
+                            newResult.getQuiz() + ", " +
+                            newResult.getAttendance() + ", " +
+                            newResult.getTest_1() + ", " +
+                            newResult.getTest_2() + ", " +
+                            newResult.getAssignment_1() + ", " +
+                            newResult.getAssignment_2() + ", " +
+                            newResult.getFinalExam() + ") WHERE course=" + newResult.getCourse().getTitle()
+                    );
+        } catch (SQLException sqlException) {
+            System.err.println("SQL Exception: " + sqlException.getMessage());
+            System.exit(1);
+        }
+        return true;
     }
 
 }
