@@ -51,6 +51,19 @@ public class LoginApplication extends Application {
 
     @FXML
     protected void studentLoginBtnClicked() throws IOException{
+        Student student = new Login().connectStudent(student_id.getText(), student_password.getText());
+
+        if (student != null) {
+            primaryStage = (Stage) studentLoginBtn.getScene().getWindow();
+            primaryStage.close();
+            StudentApplication studentApplication = new StudentApplication();
+            studentApplication.setStudent(student);
+            studentApplication.start(primaryStage);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("ID or password is incorrect");
+            alert.show();
+        }
 
     }
 
