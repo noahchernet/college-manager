@@ -1,5 +1,7 @@
 package com.student_info_manager.models;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import java.sql.*;
 
 public class Admin extends BasePerson{
@@ -17,8 +19,9 @@ public class Admin extends BasePerson{
             results_db = DriverManager.getConnection(
                     "jdbc:sqlite:src/main/java/com/student_info_manager/databases/results.db");
 
-        } catch ( Exception e ) {
+        } catch (Exception e) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            e.printStackTrace();
             System.exit(1);
         }
     }
@@ -52,6 +55,7 @@ public class Admin extends BasePerson{
                     password_hash));
         } catch (SQLException sqlException) {
             System.err.println("SQL Exception: " + sqlException.getMessage());
+            sqlException.printStackTrace();
             System.exit(1);
         }
         return true;
@@ -77,6 +81,7 @@ public class Admin extends BasePerson{
 
         } catch (SQLException sqlException) {
             System.err.println("SQL Exception: " + sqlException.getMessage());
+            sqlException.printStackTrace();
             System.exit(1);
         }
         return true;
@@ -139,6 +144,7 @@ public class Admin extends BasePerson{
 
         } catch (SQLException sqlException) {
             System.err.println("SQL Exception: " + sqlException.getMessage());
+            sqlException.printStackTrace();
             System.exit(1);
         }
         return true;
@@ -164,6 +170,7 @@ public class Admin extends BasePerson{
 
         } catch (SQLException sqlException) {
             System.err.println("SQL Exception: " + sqlException.getMessage());
+            sqlException.printStackTrace();
             System.exit(1);
         }
         return true;
@@ -176,6 +183,7 @@ public class Admin extends BasePerson{
      */
     public Course getCourse(String title) {
         try {
+            stmt = courses_db.createStatement();
             ResultSet found_course =
                     stmt.executeQuery("SELECT * FROM courses WHERE title = '" + title + "'");
 
@@ -188,6 +196,7 @@ public class Admin extends BasePerson{
 
         } catch (SQLException sqlException) {
             System.err.println("SQL Exception: " + sqlException.getMessage());
+            sqlException.printStackTrace();
             System.exit(1);
         }
         return null;
@@ -232,6 +241,7 @@ public class Admin extends BasePerson{
 
         } catch (SQLException sqlException) {
             System.err.println("SQL Exception: " + sqlException.getMessage());
+            sqlException.printStackTrace();
             System.exit(1);
         }
         return true;
@@ -257,13 +267,40 @@ public class Admin extends BasePerson{
                             newResult.getTest_2() + ", " +
                             newResult.getAssignment_1() + ", " +
                             newResult.getAssignment_2() + ", " +
-                            newResult.getFinalExam() + ") WHERE course=" + newResult.getCourse().getTitle()
-                    );
+                            newResult.getFinalExam() + ") WHERE course='" + newResult.getCourse().getTitle() + "'");
+            resultsStmt.close();
         } catch (SQLException sqlException) {
             System.err.println("SQL Exception: " + sqlException.getMessage());
+            sqlException.printStackTrace();
             System.exit(1);
         }
         return true;
+    }
+
+
+    /**
+     * Returns a student with the matching ID
+     * @param ID identifying string of the student, a primary key in the 'students' table
+     * @return a new instance of Student if successful, null otherwise
+     */
+    public Student getStudent(String ID) {
+        Student retrievedStudent = null;
+        try {
+            Statement stmt = users_db.createStatement();
+            ResultSet result = stmt.executeQuery("SELECT * FROM students WHERE ID = '" + ID + "'");
+
+            if (result.isClosed()) return null;
+
+            retrievedStudent = new Student(result.getString("first_name"), result.getString("middle_name"),
+                    result.getString("last_name"), result.getString("section") , result.getInt("batch")
+                    , result.getString("department"), result.getString("ID"));
+        } catch (SQLException sqlException) {
+            System.err.println( sqlException.getClass().getName() + ": " + sqlException.getMessage() );
+            sqlException.printStackTrace();
+            System.exit(1);
+        }
+        // If no user is found, return null
+        return retrievedStudent;
     }
 
 }
