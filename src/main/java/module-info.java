@@ -10,4 +10,5 @@ module com.student_info_manager {
     opens com.student_info_manager.ui to javafx.fxml;
     exports com.student_info_manager.ui;
     exports com.student_info_manager.control;
+    exports com.student_info_manager.models;
 }

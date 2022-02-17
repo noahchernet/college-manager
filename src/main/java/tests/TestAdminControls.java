@@ -70,7 +70,7 @@ public class TestAdminControls {
 
         Course courseFromDatabase = admin.getCourse("Soil Mechanics");
         assertEquals(courseToAdd.getTitle(), courseFromDatabase.getTitle());
-        assertEquals(courseToAdd.getCredit_hour(), courseFromDatabase.getCredit_hour());
+        assertEquals(courseToAdd.getCreditHour(), courseFromDatabase.getCreditHour());
         assertEquals(courseToAdd.getSemester_given(), courseFromDatabase.getSemester_given());
         assertEquals(courseToAdd.getPrerequisite(), courseFromDatabase.getPrerequisite());
 
