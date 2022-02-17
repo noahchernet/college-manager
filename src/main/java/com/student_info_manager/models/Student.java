@@ -1,6 +1,7 @@
 package com.student_info_manager.models;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 /**
  * Represents a student in the university/college
@@ -97,9 +98,52 @@ public class Student extends BasePerson{
         }
         return null;
     }
+    
+    public ArrayList<Course> getSemesterCourses(int semester){
+        try {
+            ResultSet coursesTaking =
+                    courses_db.createStatement().executeQuery("SELECT * FROM courses WHERE semester_given = " + semester +
+                            " AND department = '" + this.getDepartment() + "'");
 
-    public void getAllCourses(){
-        // TODO: get courses from Department
+            // If a matching course title is found, make a Course object from the row  the title was found and return it
+            if (!coursesTaking.isClosed()) {
+                ArrayList<Course> courses = new ArrayList<>();
+                while (coursesTaking.next()) {
+                    courses.add(new Course(coursesTaking.getString("title"), coursesTaking.getInt("credit_hr"),
+                            coursesTaking.getInt("semester_given"), coursesTaking.getString("prerequisite"),
+                            coursesTaking.getString("department")));
+                }
+                return courses;
+            }
+
+        } catch (SQLException sqlException) {
+            System.err.println("SQL Exception: " + sqlException.getMessage());
+            System.exit(1);
+        }
+        return null;
+    }
+
+    public ArrayList<Course> getAllCourses(){
+        try {
+            ResultSet coursesTaking =
+                    courses_db.createStatement().executeQuery("SELECT * FROM courses WHERE department = '" + this.getDepartment() + "'");
+
+            // If a matching course title is found, make a Course object from the row  the title was found and return it
+            if (!coursesTaking.isClosed()) {
+                ArrayList<Course> courses = new ArrayList<>();
+                while (coursesTaking.next()) {
+                    courses.add(new Course(coursesTaking.getString("title"), coursesTaking.getInt("credit_hr"),
+                            coursesTaking.getInt("semester_given"), coursesTaking.getString("prerequisite"),
+                            coursesTaking.getString("department")));
+                }
+                return courses;
+            }
+
+        } catch (SQLException sqlException) {
+            System.err.println("SQL Exception: " + sqlException.getMessage());
+            System.exit(1);
+        }
+        return null;
     }
 
     public void sendFeedbackToTeacher(Teacher teacher){
