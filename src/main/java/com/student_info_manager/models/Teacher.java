@@ -15,8 +15,40 @@ public class Teacher extends BasePerson{
         this.batchTeaching = batchTeaching;
     }
 
-    public void updateResult(Student student, Result result) {
-        // TODO: when database usage is implemented, make this method update the result of @student
+    public boolean updateResult(Student student, Result newResult) {
+        if (!newResult.getStudent().equals(student)) {
+            return false;
+        }
+        String studentTableName = student.getID().replace('/', '_');
+        try {
+            Connection results_db = DriverManager.getConnection(
+                    "jdbc:sqlite:src/main/java/com/student_info_manager/databases/results.db");
+            Statement resultsStmt = results_db.createStatement();
+            ResultSet resultSet = resultsStmt.executeQuery("SELECT * FROM " +
+                    studentTableName + " WHERE course='" + newResult.getCourse().getTitle() + "'");
+
+            if (resultSet.isClosed()) {
+                resultsStmt.close();
+                results_db.close();
+                return false;
+            }
+
+            resultsStmt.executeUpdate("UPDATE " + studentTableName + " SET (quiz, attendance, test_1, test_2, " +
+                    "assignment_1, assignment_2, final_exam) = (" +
+                    newResult.getQuiz() + ", " +
+                    newResult.getAttendance() + ", " +
+                    newResult.getTest_1() + ", " +
+                    newResult.getTest_2() + ", " +
+                    newResult.getAssignment_1() + ", " +
+                    newResult.getAssignment_2() + ", " +
+                    newResult.getFinalExam() + ") WHERE course='" + newResult.getCourse().getTitle() + "'");
+            resultsStmt.close();
+        } catch (SQLException sqlException) {
+            System.err.println("SQL Exception: " + sqlException.getMessage());
+            sqlException.printStackTrace();
+            System.exit(1);
+        }
+        return true;
     }
 
     public void processFeedback() {
