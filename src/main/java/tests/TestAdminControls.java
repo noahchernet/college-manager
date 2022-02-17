@@ -5,7 +5,7 @@ import com.student_info_manager.models.*;
 import org.junit.*;
 
 import static junit.framework.TestCase.*;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
 
 /**
  * Tests the adding and removing methods of Admin
@@ -37,14 +37,14 @@ public class TestAdminControls {
         assertEquals(newTeacherToAdd.getBatchTeaching(), newTeacherFromDatabase.getBatchTeaching());
         assertEquals(newTeacherToAdd.getDepartment(), newTeacherFromDatabase.getDepartment());
 
-        // Delete teacher to ensure when the test is rerun, melaku_k is not in the database
+        // Delete teacher to ensure when the tests.test is rerun, melaku_k is not in the database
         admin.removeTeacher("melaku_k");
     }
 
     @Test
     public void testAddNewStudent() {
         Student newStudentToAdd = new Student("Melaku", "Kebede", "Gemechis", "A", 2019, "Electrical Engineering",
-                "ETS0856/19");
+                "ETS0756/19");
         admin.addStudent(newStudentToAdd, "garamond_serif78");
 
         // To re-establish connection with the database. Removing this line will throw a database
@@ -58,7 +58,7 @@ public class TestAdminControls {
         assertEquals(newStudentToAdd.getSection(), newStudentFromDatabase.getSection());
         assertEquals(newStudentToAdd.getID(), newStudentFromDatabase.getID());
 
-        // Delete teacher to ensure when the test is rerun, melaku_k is not in the database
+        // Delete teacher to ensure when the tests.test is rerun, melaku_k is not in the database
         admin.removeStudent(newStudentToAdd.getID());
     }
 
@@ -75,5 +75,23 @@ public class TestAdminControls {
         assertEquals(courseToAdd.getPrerequisite(), courseFromDatabase.getPrerequisite());
 
         admin.removeCourse(courseToAdd.getTitle());
+    }
+
+    @Test
+    public void testUpdateStudentResult() {
+        Student student = admin.getStudent("ETS0856/19");
+        Course course = admin.getCourse("Probability and Random Processes");
+        Result previousResult = new Result(course, student);
+        Result newResult = new Result(course, student);
+        newResult.setResult(2, 5, 12, 7, 10, 9, 39);
+        admin.updateResult(student, newResult);
+        newResult = new Result(course, student); // Retrieve the new result from the database
+        assertEquals(newResult.getQuiz(), 2, 0.1);
+        assertEquals(newResult.getAttendance(), 5, 0.1);
+        assertEquals(newResult.getTest_1(), 12, 0.1);
+        assertEquals(newResult.getTest_2(), 7, 0.1);
+        assertEquals(newResult.getAssignment_1(), 10, 0.1);
+        assertEquals(newResult.getAssignment_2(), 9, 0.1);
+        assertEquals(newResult.getFinalExam(), 39, 0.1);
     }
 }
