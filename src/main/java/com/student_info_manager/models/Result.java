@@ -43,10 +43,33 @@ public class Result {
             assignment_1 = scores.getDouble("assignment_1");
             assignment_2 = scores.getDouble("assignment_2");
             finalExam = scores.getDouble("final_exam");
+            resultsStmt.close();
+            results_db.close();
         } catch (SQLException sqlException) {
             System.err.println("SQL Exception: " + sqlException.getMessage());
             System.exit(1);
         }
+    }
+
+    /**
+     * Sets the whole results the student holds
+     * @param quiz the quiz
+     * @param attendance attendance score
+     * @param test_1 score from the 1st tests.test
+     * @param test_2 score from the 2nd tests.test
+     * @param assignment_1 score from the 1st assignment
+     * @param assignment_2 score from the 2nd assignment
+     * @param finalExam score from the final exam
+     */
+    public void setResult(double quiz, double attendance, double test_1, double test_2, double assignment_1,
+                 double assignment_2, double finalExam) {
+        this.quiz = quiz;
+        this.attendance = attendance;
+        this.test_1 = test_1;
+        this.test_2 = test_2;
+        this.assignment_1 = assignment_1;
+        this.assignment_2 = assignment_2;
+        this.finalExam = finalExam;
     }
 
     public Course getCourse() {
