@@ -1,7 +1,5 @@
 package com.student_info_manager.models;
 
-import org.apache.commons.codec.digest.DigestUtils;
-
 import java.sql.*;
 
 public class Admin extends BasePerson{
@@ -214,7 +212,7 @@ public class Admin extends BasePerson{
 
             stmt.executeUpdate("INSERT INTO courses (title, credit_hr, semester_given, prerequisite, department) VALUES ('" +
                     course.getTitle() + "', '" +
-                    course.getCredit_hour() + "', '" +
+                    course.getCreditHour() + "', '" +
                     course.getSemester_given() + "', '" +
                     course.getPrerequisite() + "', '" +
                     course.getDepartment() + "')");
