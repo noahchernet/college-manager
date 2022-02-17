@@ -1,24 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="948.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<TabPane fx:id="studentViewTabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="948.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
   <tabs>
     <Tab fx:id="coursesTab" text="Courses">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <TableView fx:id="SemesterScores1" layoutX="230.0" layoutY="112.0" prefHeight="234.0" prefWidth="456.0">
+                  <TableView fx:id="semesterCoursesTable" layoutX="230.0" layoutY="112.0" prefHeight="234.0" prefWidth="456.0">
                      <columns>
-                        <TableColumn fx:id="coursesTable" prefWidth="316.5" text="Course" />
-                        <TableColumn minWidth="0.0" prefWidth="138.5" text="Credit Hour" />
+                        <TableColumn fx:id="course_column_courses_table" prefWidth="316.5" text="Course" />
+                        <TableColumn fx:id="credit_hour_column_courses_table" minWidth="0.0" prefWidth="138.5" text="Credit Hour" />
                      </columns>
                   </TableView>
                   <ChoiceBox fx:id="coursesTableSemesterPicker" layoutX="320.0" layoutY="50.0" prefHeight="25.0" prefWidth="277.0" />
@@ -33,7 +27,7 @@
                     <items>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="384.0" prefWidth="639.0">
                            <children>
-                              <ChoiceBox fx:id="scorestTableSemesterPicker" layoutX="182.0" layoutY="44.0" prefHeight="25.0" prefWidth="277.0" />
+                              <ChoiceBox fx:id="scoresTableSemesterPicker" layoutX="182.0" layoutY="44.0" prefHeight="25.0" prefWidth="277.0" />
                               <TableView fx:id="SemesterScoresTable" layoutX="93.0" layoutY="97.0" prefHeight="234.0" prefWidth="456.0">
                                 <columns>
                                   <TableColumn prefWidth="305.0" text="Course" />
