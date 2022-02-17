@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="948.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+  <tabs>
+    <Tab fx:id="coursesTab" text="Courses">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TableView fx:id="SemesterScores1" layoutX="230.0" layoutY="112.0" prefHeight="234.0" prefWidth="456.0">
+                     <columns>
+                        <TableColumn fx:id="coursesTable" prefWidth="316.5" text="Course" />
+                        <TableColumn minWidth="0.0" prefWidth="138.5" text="Credit Hour" />
+                     </columns>
+                  </TableView>
+                  <ChoiceBox fx:id="coursesTableSemesterPicker" layoutX="320.0" layoutY="50.0" prefHeight="25.0" prefWidth="277.0" />
+               </children></AnchorPane>
+      </content>
+    </Tab>
+    <Tab fx:id="gradesAndScoresTab" text="Grades &amp; Scores">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="683.0">
+               <children>
+                  <SplitPane dividerPositions="0.7029090909090909" prefHeight="400.0" prefWidth="919.0">
+                    <items>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="384.0" prefWidth="639.0">
+                           <children>
+                              <ChoiceBox fx:id="scorestTableSemesterPicker" layoutX="182.0" layoutY="44.0" prefHeight="25.0" prefWidth="277.0" />
+                              <TableView fx:id="SemesterScoresTable" layoutX="93.0" layoutY="97.0" prefHeight="234.0" prefWidth="456.0">
+                                <columns>
+                                  <TableColumn prefWidth="305.0" text="Course" />
+                                  <TableColumn minWidth="0.0" prefWidth="95.5" text="Credit Hour" />
+                                    <TableColumn prefWidth="55.3333740234375" text="Grade" />
+                                </columns>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="435.0" prefWidth="371.0">
+                           <children>
+                              <Label fx:id="CourseTitle" layoutX="105.0" layoutY="35.0" text="CourseTitle" />
+                              <Label layoutX="35.0" layoutY="76.0" text="Instructor:" />
+                              <Label fx:id="InstructorName" layoutX="152.0" layoutY="76.0" text="InstructorName" />
+                              <TableView fx:id="detailedCourseScore" layoutX="35.0" layoutY="114.0" prefHeight="200.0" prefWidth="200.0">
+                                <columns>
+                                  <TableColumn fx:id="CourseScores" prefWidth="100.66674423217773" />
+                                  <TableColumn prefWidth="98.0" text="Score" />
+                                </columns>
+                              </TableView>
+                           </children></AnchorPane>
+                    </items>
+                  </SplitPane>
+               </children></AnchorPane>
+      </content>
+    </Tab>
+      <Tab text="Feedback">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+         </content>
+      </Tab>
+  </tabs>
+</TabPane>
