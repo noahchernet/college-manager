@@ -9,6 +9,7 @@ import java.sql.*;
 public class Result {
     private final Course course;
     private final Student student;
+    private final String courseTitle;
 
     private Double quiz = null;
     private Double attendance = null;
@@ -49,6 +50,8 @@ public class Result {
             System.err.println("SQL Exception: " + sqlException.getMessage());
             System.exit(1);
         }
+        this.courseTitle = course.getTitle();
+        this.evalGrade();
     }
 
     /**
@@ -71,6 +74,10 @@ public class Result {
         this.assignment_2 = assignment_2;
         this.finalExam = finalExam;
     }
+
+    public int getCourseCreditHr() { return course.getCreditHour();}
+
+    public String getCourseTitle() { return courseTitle;}
 
     public Course getCourse() {
         return course;

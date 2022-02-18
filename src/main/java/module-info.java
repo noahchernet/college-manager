@@ -11,4 +11,5 @@ module com.student_info_manager {
     exports com.student_info_manager.ui;
     exports com.student_info_manager.control;
     exports com.student_info_manager.models;
+    exports tests;
 }
