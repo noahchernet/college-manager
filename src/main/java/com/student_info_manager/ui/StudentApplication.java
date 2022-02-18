@@ -77,15 +77,14 @@ public class StudentApplication extends Application {
         coursesTableSemesterPicker.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
-                System.out.println("Selected: " + t1);
-
                 semesterCoursesTable.getItems().clear();
-                if ((int) t1 == 2 * (year - student.getBatch())) {
-                    for (Course course : student.getAllCourses())
-                        semesterCoursesTable.getItems().add(course);
-                } else {
-                    for (Course course : student.getSemesterCourses((int) t1 + 1))
-                        semesterCoursesTable.getItems().add(course);
+                try {
+                    if ((int) t1 == 2 * (year - student.getBatch()))
+                        semesterCoursesTable.getItems().addAll(student.getAllCourses());
+                    else
+                        semesterCoursesTable.getItems().addAll(student.getSemesterCourses((int) t1 + 1));
+                } catch (NullPointerException e) {
+                    System.out.println("Semester courses is empty");
                 }
             }
         });
