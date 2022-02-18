@@ -8,6 +8,7 @@ public abstract class BasePerson {
     private final String firstName;
     private final String middleName;
     private final String lastName;
+    private final String formalName;
     private final String department;
 
     public BasePerson(String firstName, String middleName, String lastName, String department) {
@@ -15,6 +16,7 @@ public abstract class BasePerson {
         this.middleName = middleName;
         this.lastName = lastName;
         this.department = department;
+        this.formalName = firstName + " " + lastName;
     }
 
     public String[] getName() {
@@ -23,5 +25,9 @@ public abstract class BasePerson {
 
     public String getDepartment() {
         return department;
+    }
+
+    public String getFormalName() {
+        return formalName;
     }
 }

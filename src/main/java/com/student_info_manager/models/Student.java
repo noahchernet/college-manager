@@ -60,6 +60,8 @@ public class Student extends BasePerson{
                 studentsResult.setAssignment_1(resultSet.getDouble("assignment_1"));
                 studentsResult.setAssignment_2(resultSet.getDouble("assignment_2"));
                 studentsResult.setFinalExam(resultSet.getDouble("final_exam"));
+                resultSet.close();
+                resultsStmt.close();
                 return studentsResult;
             }
 
