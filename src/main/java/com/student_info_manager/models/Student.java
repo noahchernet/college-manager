@@ -146,10 +146,6 @@ public class Student extends BasePerson{
         return null;
     }
 
-    public void sendFeedbackToTeacher(Teacher teacher){
-        // TODO: implement a feedback sending mechanism that sends a feedback String to a Teacher of a Course
-    }
-
     public String getSection() {
         return section;
     }
