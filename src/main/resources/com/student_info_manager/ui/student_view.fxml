@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 
-<TabPane fx:id="studentViewTabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="948.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<TabPane fx:id="studentViewTabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="948.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
   <tabs>
     <Tab fx:id="coursesTab" text="Courses">
       <content>
@@ -28,36 +37,58 @@
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="384.0" prefWidth="639.0">
                            <children>
                               <ChoiceBox fx:id="scoresTableSemesterPicker" layoutX="182.0" layoutY="44.0" prefHeight="25.0" prefWidth="277.0" />
-                              <TableView fx:id="SemesterScoresTable" layoutX="93.0" layoutY="97.0" prefHeight="234.0" prefWidth="456.0">
+                              <TableView fx:id="semesterScoresTable" layoutX="93.0" layoutY="97.0" prefHeight="234.0" prefWidth="456.0">
                                 <columns>
-                                  <TableColumn prefWidth="305.0" text="Course" />
-                                  <TableColumn minWidth="0.0" prefWidth="95.5" text="Credit Hour" />
-                                    <TableColumn prefWidth="55.3333740234375" text="Grade" />
+                                  <TableColumn fx:id="courseColResultsTable" prefWidth="305.0" text="Course" />
+                                  <TableColumn fx:id="creditHrColResultsTable" minWidth="0.0" prefWidth="95.5" text="Credit Hour" />
+                                    <TableColumn fx:id="gradeColResultsTable" prefWidth="55.3333740234375" text="Grade" />
                                 </columns>
                               </TableView>
                            </children>
                         </AnchorPane>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="435.0" prefWidth="371.0">
                            <children>
-                              <Label fx:id="CourseTitle" layoutX="105.0" layoutY="35.0" text="CourseTitle" />
-                              <Label layoutX="35.0" layoutY="76.0" text="Instructor:" />
-                              <Label fx:id="InstructorName" layoutX="152.0" layoutY="76.0" text="InstructorName" />
-                              <TableView fx:id="detailedCourseScore" layoutX="35.0" layoutY="114.0" prefHeight="200.0" prefWidth="200.0">
-                                <columns>
-                                  <TableColumn fx:id="CourseScores" prefWidth="100.66674423217773" />
-                                  <TableColumn prefWidth="98.0" text="Score" />
-                                </columns>
-                              </TableView>
+                              <Label fx:id="courseTitle" layoutX="8.0" layoutY="28.0" prefHeight="50.0" prefWidth="253.0" />
+                              <GridPane layoutX="31.0" layoutY="118.0" prefHeight="224.0" prefWidth="204.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <Label text="Quiz" />
+                                    <Label fx:id="quiz" GridPane.columnIndex="1" />
+                                    <Label text="Attendance" GridPane.rowIndex="1" />
+                                    <Label fx:id="attendance" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <Label text="Assignment 1" GridPane.rowIndex="2" />
+                                    <Label fx:id="assignment_1" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <Label text="Assignment 2" GridPane.rowIndex="3" />
+                                    <Label fx:id="assignment_2" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <Label text="Test 1" GridPane.rowIndex="4" />
+                                    <Label fx:id="test_1" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                    <Label text="Test 2" GridPane.rowIndex="5" />
+                                    <Label fx:id="test_2" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                    <Label text="Final Exam" GridPane.rowIndex="6" />
+                                    <Label fx:id="finalExam" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                    <Label text="Grade" GridPane.rowIndex="8" />
+                                    <Label fx:id="grade" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                                 </children>
+                              </GridPane>
                            </children></AnchorPane>
                     </items>
                   </SplitPane>
                </children></AnchorPane>
       </content>
     </Tab>
-      <Tab text="Feedback">
-         <content>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-         </content>
-      </Tab>
   </tabs>
 </TabPane>
