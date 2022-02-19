@@ -33,9 +33,25 @@
             </content>
           </Tab>
           <Tab text="Manage Teachers">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-            </content>
+                  <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="534.0" prefWidth="1038.0">
+                          <children>
+                              <TableView fx:id="teachersTable" layoutX="76.0" layoutY="89.0" prefHeight="320.0" prefWidth="1005.0">
+                                  <columns>
+                                      <TableColumn fx:id="firstNameColsTeachersTable" prefWidth="127.0" text="First Name" />
+                                      <TableColumn fx:id="middleNameColsTeachersTable" prefWidth="124.5" text="Middle Name" />
+                                      <TableColumn fx:id="lastNameColsTeachersTable" prefWidth="127.5" text="Last Name" />
+                                      <TableColumn fx:id="departmentColTeachersTable" prefWidth="187.0" text="Department" />
+                                      <TableColumn fx:id="courseTeachingColTeachersTable" prefWidth="268.5" text="Course Teaching" />
+                                      <TableColumn fx:id="sectionsTeachingColTeachersTable" prefWidth="102.0" text="Sections" />
+                              <TableColumn fx:id="batchTeachingColTeachersTable" prefWidth="67.5" text="Batch" />
+                                  </columns>
+                              </TableView>
+                              <Button fx:id="removeTeacherBtn" layoutX="940.0" layoutY="433.0" mnemonicParsing="false" onAction="#onRemoveTeacherBtnClicked" prefHeight="25.0" prefWidth="141.0" text="Remove Teacher" />
+                              <Button fx:id="addTeacherBtn" layoutX="712.0" layoutY="433.0" mnemonicParsing="false" onAction="#onAddTeacherBtnClicked" prefHeight="25.0" prefWidth="125.0" text="Add Teacher" />
+                          </children>
+                      </AnchorPane>
+                  </content>
           </Tab>
             <Tab text="Manage Courses">
               <content>

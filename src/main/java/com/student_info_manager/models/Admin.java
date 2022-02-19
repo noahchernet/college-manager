@@ -326,4 +326,44 @@ public class Admin extends BasePerson{
         return retrievedStudents;
     }
 
+    public ArrayList<Teacher> getAllTeachers() {
+        ArrayList<Teacher> retrievedTeachers = new ArrayList<>();
+        try {
+            Statement stmt = users_db.createStatement();
+            ResultSet result = stmt.executeQuery("SELECT * FROM teachers WHERE  department = '" + getDepartment() +
+                    "'");
+
+            if (result.isClosed()) return null;
+
+            while (result.next()) {
+                retrievedTeachers.add(new Teacher(result.getString("first_name"), result.getString("middle_name"),
+                        result.getString("last_name"), result.getString("course_teaching") , result.getString(
+                                "sections_teaching")
+                        , result.getInt("batch_teaching"), result.getString("department")));
+            }
+        } catch (SQLException sqlException) {
+            System.err.println( sqlException.getClass().getName() + ": " + sqlException.getMessage() );
+            sqlException.printStackTrace();
+            System.exit(1);
+        }
+        // If no user is found, return null
+        return retrievedTeachers;
+    }
+
+    public String getTeacherUsername(Teacher teacher) {
+        try {
+            Statement stmt = users_db.createStatement();
+            ResultSet result = stmt.executeQuery("SELECT username FROM teachers WHERE first_name = '" + teacher.getFirstName() +
+                    "' AND middle_name = '" + teacher.getMiddleName() + "' AND last_name = '" + teacher.getLastName() + "';");
+
+            if (result.isClosed()) return null;
+
+            return result.getString("username");
+
+        } catch (SQLException sqlException) {
+            System.err.println( sqlException.getClass().getName() + ": " + sqlException.getMessage() );
+            sqlException.printStackTrace();
+            return null;
+        }
+    }
 }
