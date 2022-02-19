@@ -302,7 +302,6 @@ public class Admin extends BasePerson{
         return retrievedStudent;
     }
 
-
     public ArrayList<Student> getAllStudents() {
         ArrayList<Student> retrievedStudents = new ArrayList<>();
         try {
@@ -348,6 +347,30 @@ public class Admin extends BasePerson{
         }
         // If no user is found, return null
         return retrievedTeachers;
+    }
+
+    public ArrayList<Course> getAllCourses() {
+        try {
+            ArrayList<Course> allCourses = new ArrayList<>();
+            stmt = courses_db.createStatement();
+            ResultSet foundCourses =
+                    stmt.executeQuery("SELECT * FROM courses WHERE department = '" + getDepartment() + "'");
+
+            // If a matching course title is found, make a Course object from the row  the title was found and return it
+            if (!foundCourses.isClosed()) {
+                while (foundCourses.next())
+                allCourses.add(new Course(foundCourses.getString("title"), foundCourses.getInt("credit_hr"),
+                        foundCourses.getInt("semester_given"), foundCourses.getString("prerequisite"),
+                        foundCourses.getString("department")));
+                return allCourses;
+            }
+
+        } catch (SQLException sqlException) {
+            System.err.println("SQL Exception: " + sqlException.getMessage());
+            sqlException.printStackTrace();
+            return null;
+        }
+        return null;
     }
 
     public String getTeacherUsername(Teacher teacher) {

@@ -55,7 +55,20 @@
           </Tab>
             <Tab text="Manage Courses">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="coursesTable" layoutX="57.0" layoutY="72.0" prefHeight="320.0" prefWidth="1045.0">
+                           <columns>
+                              <TableColumn fx:id="titleColCoursesTable" prefWidth="355.5" text="Title" />
+                              <TableColumn fx:id="creditHrColCoursesTable" prefWidth="104.0" text="Credit Hour" />
+                              <TableColumn fx:id="semesterGivenColCoursesTable" prefWidth="124.5" text="Semester Given" />
+                              <TableColumn fx:id="departmentColCoursesTable" prefWidth="181.0" text="Department" />
+                              <TableColumn fx:id="prerequisiteColCoursesTable" prefWidth="279.0" text="Prerequisite Course" />
+                           </columns>
+                        </TableView>
+                        <Button fx:id="removeCourseBtn" layoutX="961.0" layoutY="434.0" mnemonicParsing="false" onAction="#onRemoveCourseBtnClicked" prefHeight="25.0" prefWidth="141.0" text="Remove Course" />
+                        <Button fx:id="addCourseBtn" layoutX="688.0" layoutY="434.0" mnemonicParsing="false" onAction="#onAddCourseBtnClicked" prefHeight="25.0" prefWidth="125.0" text="Add Course" />
+                     </children></AnchorPane>
               </content>
             </Tab>
             <Tab text="About Me">

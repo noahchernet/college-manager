@@ -1,6 +1,7 @@
 package com.student_info_manager.ui;
 
 import com.student_info_manager.models.Admin;
+import com.student_info_manager.models.Course;
 import com.student_info_manager.models.Student;
 import com.student_info_manager.models.Teacher;
 import javafx.application.Application;
@@ -18,6 +19,8 @@ public class AdminApplication extends Application {
     private Admin admin;
     Stage addNewStudentDialogStage = new Stage();
     Stage addNewTeacherDialogStage = new Stage();
+    Stage addNewCourseDialogStage = new Stage();
+
     // Students tab
     @FXML
     private TableView<Student> studentsTable;
@@ -74,7 +77,6 @@ public class AdminApplication extends Application {
     @FXML
     private TableColumn batchTeachingColTeachersTable;
 
-
     @FXML
     private TextField teacherUname;
     @FXML
@@ -95,6 +97,32 @@ public class AdminApplication extends Application {
     private TextField teacherPassword;
     @FXML
     private TextField teacherPasswordReentered;
+
+    // Courses Tab
+    @FXML
+    private TableView<Course> coursesTable ;
+    @FXML
+    private TableColumn titleColCoursesTable;
+    @FXML
+    private TableColumn creditHrColCoursesTable;
+    @FXML
+    private TableColumn semesterGivenColCoursesTable;
+    @FXML
+    private TableColumn departmentColCoursesTable;
+    @FXML
+    private TableColumn prerequisiteColCoursesTable;
+
+
+    @FXML
+    private TextField courseTitle;
+    @FXML
+    private TextField courseCreditHr;
+    @FXML
+    private TextField courseSemesterGiven;
+    @FXML
+    private TextField courseDepartment;
+    @FXML
+    private TextField coursePrerequisite;
 
     public static void main(String[] args) {
         launch(args);
@@ -128,6 +156,14 @@ public class AdminApplication extends Application {
         batchTeachingColTeachersTable.setCellValueFactory(new PropertyValueFactory<>("batchTeaching"));
 
         teachersTable.getItems().addAll(admin.getAllTeachers());
+
+        titleColCoursesTable.setCellValueFactory(new PropertyValueFactory<>("title"));
+        creditHrColCoursesTable.setCellValueFactory(new PropertyValueFactory<>("creditHour"));
+        semesterGivenColCoursesTable.setCellValueFactory(new PropertyValueFactory<>("semester_given"));
+        departmentColCoursesTable.setCellValueFactory(new PropertyValueFactory<>("department"));
+        prerequisiteColCoursesTable.setCellValueFactory(new PropertyValueFactory<>("prerequisite"));
+
+        coursesTable.getItems().addAll(admin.getAllCourses());
 
     }
 
@@ -188,6 +224,7 @@ public class AdminApplication extends Application {
     public void onCancelDialogBtnClicked(){
         addNewStudentDialogStage.close();
         addNewTeacherDialogStage.close();
+        addNewCourseDialogStage.close();
     }
 
     public void onRemoveStudentBtnClicked() {
@@ -247,7 +284,6 @@ public class AdminApplication extends Application {
         addNewTeacherDialogStage.show();
     }
 
-
     public void onAddNewTeacherDialogBtnClicked(){
         if (teacherPassword.getText().equals("") || teacherPasswordReentered.getText().equals("")) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -287,6 +323,60 @@ public class AdminApplication extends Application {
             alert.setContentText("The credentials you entered are wrong or the same student exists. Please review " +
                     "them before proceeding");
             alert.show();
+        }
+    }
+
+
+    public void onAddCourseBtnClicked() throws IOException{
+        FXMLLoader fxmlLoader = new FXMLLoader(AdminApplication.class.getResource("add_course_dialog.fxml"));
+        fxmlLoader.setController(this);
+        Scene scene = new Scene(fxmlLoader.load());
+        addNewCourseDialogStage.setScene(scene);
+        addNewCourseDialogStage.show();
+    }
+
+    public void onRemoveCourseBtnClicked() {
+        if (coursesTable.getSelectionModel().getSelectedItem() == null) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText("Please select a course to remove");
+            alert.show();
+            return;
+        }
+
+        Course selectedCourse = coursesTable.getSelectionModel().getSelectedItem();
+
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Warning");
+        alert.setContentText("Are you sure you want to remove the course '" + selectedCourse.getTitle() + "'?\nThis is irreversible!");
+
+        Optional<ButtonType> alertButtonResult = alert.showAndWait();
+
+        if (alertButtonResult.isPresent() && alertButtonResult.get() == ButtonType.OK) {
+            admin.removeCourse(selectedCourse.getTitle());
+            coursesTable.getItems().clear();
+            coursesTable.getItems().addAll(admin.getAllCourses());
+        }
+    }
+
+    public void onAddNewCourseDialogBtnClicked() {
+        if (courseTitle.getText().equals("") || courseCreditHr.getText().equals("") || courseSemesterGiven.getText().equals("")
+        || courseDepartment.getText().equals("") || coursePrerequisite.getText().equals("")) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setContentText("Please make sure you have entered all the fields.");
+            alert.show();
+            return;
+        }
+
+        Course courseToAdd = new Course(courseTitle.getText(), Integer.parseInt(courseCreditHr.getText()),
+                Integer.parseInt(courseSemesterGiven.getText()), coursePrerequisite.getText(), courseDepartment.getText());
+
+        if (admin.addCourse(courseToAdd)) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText("The course has been added successfully!");
+            alert.show();
+            coursesTable.getItems().clear();
+            coursesTable.getItems().addAll(admin.getAllCourses());
+            addNewCourseDialogStage.close();
         }
     }
 
