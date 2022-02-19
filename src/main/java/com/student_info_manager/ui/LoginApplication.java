@@ -1,6 +1,7 @@
 package com.student_info_manager.ui;
 
 import com.student_info_manager.control.Login;
+import com.student_info_manager.models.Admin;
 import com.student_info_manager.models.Student;
 import com.student_info_manager.models.Teacher;
 import javafx.application.Application;
@@ -23,7 +24,7 @@ public class LoginApplication extends Application {
     @FXML
     private TextField teacher_id;
     @FXML
-    private TextField admin_id;
+    private TextField admin_username;
     @FXML
     private PasswordField student_password;
     @FXML
@@ -34,6 +35,8 @@ public class LoginApplication extends Application {
     private Button studentLoginBtn;
     @FXML
     private Button teacherLoginBtn;
+    @FXML
+    private Button adminLoginBtn;
 
     public LoginApplication() {
         primaryStage = new Stage();
@@ -85,12 +88,23 @@ public class LoginApplication extends Application {
             alert.setContentText("Username or password is incorrect");
             alert.show();
         }
-
-
     }
 
     @FXML
-    protected void adminLoginBtnClicked() {
+    protected void adminLoginBtnClicked() throws IOException{
+        Admin admin = new Login().connectAdmin(admin_username.getText(), admin_password.getText());
+
+        if (admin != null) {
+            primaryStage = (Stage) adminLoginBtn.getScene().getWindow();
+            primaryStage.close();
+            AdminApplication adminApplication = new AdminApplication();
+            adminApplication.setAdmin(admin);
+            adminApplication.start(primaryStage);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Username or password is incorrect");
+            alert.show();
+        }
 
     }
 }

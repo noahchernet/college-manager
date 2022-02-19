@@ -1,6 +1,7 @@
 package com.student_info_manager.models;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class Admin extends BasePerson{
     private Connection users_db, results_db, courses_db;
@@ -143,7 +144,7 @@ public class Admin extends BasePerson{
         } catch (SQLException sqlException) {
             System.err.println("SQL Exception: " + sqlException.getMessage());
             sqlException.printStackTrace();
-            System.exit(1);
+            return false;
         }
         return true;
     }
@@ -299,6 +300,30 @@ public class Admin extends BasePerson{
         }
         // If no user is found, return null
         return retrievedStudent;
+    }
+
+
+    public ArrayList<Student> getAllStudents() {
+        ArrayList<Student> retrievedStudents = new ArrayList<>();
+        try {
+            Statement stmt = users_db.createStatement();
+            ResultSet result = stmt.executeQuery("SELECT * FROM students WHERE  department = '" + getDepartment() +
+                    "'");
+
+            if (result.isClosed()) return null;
+
+            while (result.next()) {
+                retrievedStudents.add(new Student(result.getString("first_name"), result.getString("middle_name"),
+                        result.getString("last_name"), result.getString("section") , result.getInt("batch")
+                        , result.getString("department"), result.getString("ID")));
+            }
+        } catch (SQLException sqlException) {
+            System.err.println( sqlException.getClass().getName() + ": " + sqlException.getMessage() );
+            sqlException.printStackTrace();
+            System.exit(1);
+        }
+        // If no user is found, return null
+        return retrievedStudents;
     }
 
 }
