@@ -68,6 +68,23 @@ public class StudentApplication extends Application {
     public TableColumn spesificScoreColDetailsTable;
 
 
+    // About Me Tab
+    @FXML
+    private Label studentID;
+    @FXML
+    private Label studentFirstname;
+    @FXML
+    private Label studentMiddleName;
+    @FXML
+    private Label studentLastName;
+    @FXML
+    private Label studentDepartment;
+    @FXML
+    private Label studentSection;
+    @FXML
+    private Label studentBatch;
+
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -157,6 +174,14 @@ public class StudentApplication extends Application {
                 }
             }
         });
+
+        studentID.setText(student.getID());
+        studentFirstname.setText(student.getFirstName());
+        studentMiddleName.setText(student.getMiddleName());
+        studentLastName.setText(student.getLastName());
+        studentDepartment.setText(student.getDepartment());
+        studentSection.setText(student.getSection());
+        studentBatch.setText("" + student.getBatch());
     }
 
     public void setStudent(Student student) {

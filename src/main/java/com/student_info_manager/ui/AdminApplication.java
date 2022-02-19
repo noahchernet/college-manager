@@ -124,6 +124,16 @@ public class AdminApplication extends Application {
     @FXML
     private TextField coursePrerequisite;
 
+    // About Me Tab
+    @FXML
+    private Label adminFirstname;
+    @FXML
+    private Label adminMiddleName;
+    @FXML
+    private Label adminLastName;
+    @FXML
+    private Label adminDepartment;
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -165,6 +175,10 @@ public class AdminApplication extends Application {
 
         coursesTable.getItems().addAll(admin.getAllCourses());
 
+        adminFirstname.setText(admin.getFirstName());
+        adminMiddleName.setText(admin.getMiddleName());
+        adminLastName.setText(admin.getLastName());
+        adminDepartment.setText(admin.getDepartment());
     }
 
     public void setAdmin(Admin admin) {

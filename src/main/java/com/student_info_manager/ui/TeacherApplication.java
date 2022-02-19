@@ -44,6 +44,23 @@ public class TeacherApplication extends Application {
     @FXML
     public Button updateScore;
 
+
+    // About Me Tab
+    @FXML
+    private Label teacherFirstname;
+    @FXML
+    private Label teacherMiddleName;
+    @FXML
+    private Label teacherLastName;
+    @FXML
+    private Label teacherDepartment;
+    @FXML
+    private Label teacherSections;
+    @FXML
+    private Label teacherBatches;
+    @FXML
+    private Label teacherCourse;
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -83,6 +100,14 @@ public class TeacherApplication extends Application {
                 grade.setText("" + selectedStudentResult.getGrade());
             }
         });
+
+        teacherFirstname.setText(teacher.getFirstName());
+        teacherMiddleName.setText(teacher.getMiddleName());
+        teacherLastName.setText(teacher.getLastName());
+        teacherDepartment.setText(teacher.getDepartment());
+        teacherSections.setText(teacher.getSectionsTeaching());
+        teacherBatches.setText("" + teacher.getBatchTeaching());
+        teacherCourse.setText(teacher.getCourseTeaching());
 
     }
 
