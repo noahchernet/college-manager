@@ -1,4 +1,4 @@
-Student Information Manager
+College Manager
 ===
 Technologies and Frameworks used:
 
