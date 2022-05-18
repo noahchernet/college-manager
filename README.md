@@ -8,8 +8,7 @@ Technologies and Frameworks used:
 | ![](https://cdn.tutsplus.com/mobile/uploads/legacy/71_learn-java/Java_Logo.png) | ![](http://www.codebind.com/wp-content/uploads/2016/09/SQLite-300x193.jpg) | ![](http://static1.1.sqspcdn.com/static/f/923743/15112094/1321256728823/javafx_logo_color_1.jpg?token=iJn8PoIr9%2Fh6XR8DEjXSuozeozQ%3D) | ![](https://avatars1.githubusercontent.com/u/874086?v=3&s=400) | ![](https://www.liberiangeek.net/wp-content/uploads/2018/12/maven2.jpg) | ![](http://gluonhq.com/wp-content/uploads/2015/02/SceneBuilderLogo.png) |
 
 <br>
-This app lets members of a university/college access grades and courses.
-<br>It lets:
+This app lets members of a university/college access grades and courses. It lets:
 
 * Students view the courses they take and the scores they got from the courses.
 * Teachers to see the students they teach and modify the scores that they are given.
