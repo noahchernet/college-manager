@@ -91,7 +91,7 @@ public class StudentApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("student_view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(StudentApplication.class.getResource("student_view.fxml"));
         fxmlLoader.setController(this);
         Scene scene = new Scene(fxmlLoader.load());
         primaryStage.setTitle("Welcome back " + student.getName()[0] + "!");
