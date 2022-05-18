@@ -9,7 +9,8 @@ Technologies and Frameworks used:
 
 <br>
 This app lets members of a university/college access grades and courses.
-<br>It lets: 
+<br>It lets:
+
 * Students view the courses they take and the scores they got from the courses.
 * Teachers to see the students they teach and modify the scores that they are given.
 * College deans and administrators to view, add, and remove students, courses and teachers.
